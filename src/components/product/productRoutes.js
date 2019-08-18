@@ -1,9 +1,13 @@
-var Router = require('express')
+'use strict'
+const express = require('express')
+const api = express.Router()
+const cors = require('cors')
 var productsCtrl = require('./productController')
-var router = Router()
+//middleware
+api.options('*',cors())
 
-router.get('/', productsCtrl.listAllProduct)
-router.post('/', productsCtrl.addProduct)
-router.delete('/', productsCtrl.deleteProduct)
+api.get('/',cors(), productsCtrl.listAllProduct)
+api.post('/',cors(), productsCtrl.addProduct)
+api.delete('/',cors(), productsCtrl.deleteProduct)
 
-module.exports = router
+module.exports = api

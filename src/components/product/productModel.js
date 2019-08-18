@@ -3,7 +3,7 @@
 var Sequelize = require('sequelize')
 var sequelize = require('../../db/config')
 
-var Product = sequelize.define('product',{
+var Product = sequelize.define('product', {
   name: {
     type: Sequelize.STRING,
   },
@@ -17,10 +17,10 @@ var Product = sequelize.define('product',{
     type: Sequelize.INTEGER,
     primaryKey: true
   }
-},{
-  tableName:'products',
-  underscored:true,
-  timestamps: true
-})
+}, {
+    tableName: 'products',
+    underscored: true,
+    timestamps: false
+  })
 
 module.exports = Product

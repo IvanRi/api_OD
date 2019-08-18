@@ -1,7 +1,9 @@
 var Router = require('express')
-var listAllProduct = require('./productController')
+var productsCtrl = require('./productController')
 var router = Router()
 
-router.get('/', listAllProduct)
+router.get('/', productsCtrl.listAllProduct)
+router.post('/', productsCtrl.addProduct)
+router.delete('/', productsCtrl.deleteProduct)
 
 module.exports = router

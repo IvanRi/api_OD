@@ -4,14 +4,11 @@
   "description": "api from order dispatcher",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js --exec babel-node",
-    "start": "nodemon public/index.js",
-    "build": "babel src --out-dir public"
+    "start": "nodemon src/index.js"
   },
   "author": "Ivan Riboldi",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.9.1",
@@ -19,11 +16,5 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.15.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5"
   }
 }

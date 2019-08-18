@@ -1,7 +1,9 @@
-import Sequelize from 'sequelize'
-import { sequelize } from '../../db/config'
+"use strict";
 
-const Product = sequelize.define('product',{
+var Sequelize = require('sequelize')
+var sequelize = require('../../db/config')
+
+var Product = sequelize.define('product',{
   name: {
     type: Sequelize.STRING,
   },
@@ -21,4 +23,4 @@ const Product = sequelize.define('product',{
   timestamps: true
 })
 
-export default Product
+module.exports = Product

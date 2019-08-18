@@ -1,14 +1,14 @@
-import express, { json } from 'express'
-import morgan from 'morgan'
-import cors from 'cors'
-import productRoutes from './../components/product/productRoutes'
+var express= require('express')
+var morgan =require('morgan')
+var cors =require('cors')
+var productRoutes= require('./components/product/productRoutes')
 //init
-const app = express();
-let port = process.env.PORT || 3001;
+var app = express();
+var port = process.env.PORT || 3001;
 
 //middleware
 app.use(morgan('dev'))
-app.use(json())
+app.use(express.json())
 app.use(cors())
 
 //routes
@@ -18,4 +18,4 @@ app.listen(port, function () {
   console.log('Example app listening on port 3001!');
 });
 
-export default app
+module.exports = app

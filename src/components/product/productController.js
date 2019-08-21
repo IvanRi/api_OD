@@ -37,8 +37,27 @@ var deleteProduct = async function (req, res) {
   }
 }
 
+var updateProduct = async function (req,res){
+  const newProduct = req.body
+  try{
+    await Product.update({ 
+      name: newProduct.name,
+      price: newProduct.price,
+      description: newProduct.description,
+    },{
+      where: {
+        id: newProduct.id_product
+      }
+    })
+    return res.send({status:'ok'})
+  }catch (e) {
+    return res.status(500).send({message: `Ocurrio un erro inesperado!: ${e}`})
+  }
+}
+
 module.exports = {
   listAllProduct,
   addProduct,
-  deleteProduct
+  deleteProduct,
+  updateProduct
 }

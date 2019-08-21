@@ -18,7 +18,7 @@ var addProduct = async function (req, res) {
       description: newProduct.description,
       id: newID
     })
-    res.send({ message: 'created' })
+    res.send({ message: 'created', product_id: newID })
   } catch (e) {
     return res.status(500).send({ "Error": e })
   }

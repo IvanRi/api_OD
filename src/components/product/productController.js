@@ -3,7 +3,9 @@
 var Product = require('./productModel')
 
 var listAllProduct = async function (req, res) {
-  const productList = await Product.findAll()
+  const productList = await Product.findAll({
+    order: [["id","ASC"]]
+  })
   res.send({ data: productList })
 }
 

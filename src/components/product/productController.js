@@ -40,18 +40,18 @@ var deleteProduct = async function (req, res) {
 }
 
 var updateProduct = async function (req,res){
-  const newProduct = req.body
+  const updatedProduct = req.body
   try{
     await Product.update({ 
-      name: newProduct.name,
-      price: newProduct.price,
-      description: newProduct.description,
+      name: updatedProduct.name,
+      price: updatedProduct.price,
+      description: updatedProduct.description,
     },{
       where: {
-        id: newProduct.id_product
+        id: updatedProduct.id_product
       }
     })
-    return res.send({status:'ok'})
+    return res.send({status:'ok', product: updatedProduct})
   }catch (e) {
     return res.status(500).send({message: `Ocurrio un erro inesperado!: ${e}`})
   }

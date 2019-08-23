@@ -11,8 +11,8 @@ var listAllProduct = async function (req, res) {
 
 var addProduct = async function (req, res) {
   var newProduct = req.body
-  var productList = await Product.findAll()
-  var newID = productList[productList.length - 1].id + 1
+  var productIdMax = await Product.sequelize.query("select max(id) from products")
+  var newID = productIdMax[0][0].max+1
   try {
     await Product.create({
       name: newProduct.name,
@@ -53,7 +53,7 @@ var updateProduct = async function (req,res){
     })
     return res.send({status:'ok', product: updatedProduct})
   }catch (e) {
-    return res.status(500).send({message: `Ocurrio un erro inesperado!: ${e}`})
+    return res.status(500).send({"Error":e})
   }
 }
 

@@ -2,6 +2,8 @@ var express = require('express')
 var morgan = require('morgan')
 var productRoutes = require('./components/product/productRoutes')
 var userRoutes = require('./components/user/userRoutes')
+var login = require('./services/login')
+var auth = require('./middlewares/auth')
 //init
 var app = express();
 var port = process.env.PORT || 3001;
@@ -22,8 +24,9 @@ app.use(express.json())
 
 
 //routes products
-app.use('/api/products', productRoutes)
-app.use('/api/users', userRoutes)
+app.use('/login', login)
+app.use('/api/products',auth, productRoutes)
+app.use('/api/users',auth, userRoutes)
 
 app.listen(port, function () {
   console.log('Example app listening on port 3001!');

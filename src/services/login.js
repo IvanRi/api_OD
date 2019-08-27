@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
 
 const checkUserData = async function (req, res) {
+  console.log("REQ",req.body)
   try {
     const user = await User.findAll({
       where: {

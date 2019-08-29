@@ -31,10 +31,5 @@ function decodeToken(token) {
   })
   return decode
 }
-// const payload = await jwt.decode(token, SECRET)
-// if (!payload) return { status: "Error", Error: "No se puede realizar esta operacion." }
-// if (payload.exp <= moment().unix()) return { status: "Error", Error: "El token expiro." }
-// if (payload.sub) return {status: "check", user_rol: payload.sub}
-// return { status: "Error", Error: "Error" }
 
 module.exports = { createToken, decodeToken }

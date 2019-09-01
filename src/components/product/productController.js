@@ -47,7 +47,7 @@ var updateProduct = async function (req,res){
       name: updatedProduct.name,
       price: updatedProduct.price,
       description: updatedProduct.description,
-      cuantity: updateProduct.cuantity
+      cuantity: updatedProduct.cuantity
     },{
       where: {
         id: updatedProduct.id_product

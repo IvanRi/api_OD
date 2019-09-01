@@ -16,6 +16,9 @@ var Product = sequelize.define('product', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true
+  },
+  cuantity: {
+    type: Sequelize.INTEGER,
   }
 }, {
     tableName: 'products',

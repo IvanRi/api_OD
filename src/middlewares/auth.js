@@ -10,13 +10,11 @@ function isAuth(req, res, next) {
   jwt.decodeToken(token)
     .then(response => {
   console.log("RESPONSE OK",response)
-
       req.user = response
       next()
     })
     .catch(response => {
   console.log("RESPONSE FAIL",response)
-
       res.status(response.status)
     })
 }

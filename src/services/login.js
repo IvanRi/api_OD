@@ -20,7 +20,7 @@ const checkUserData = async function (req, res) {
       return res.status(404).send({ Error: "Usuario no encontrado." })
     }
   } catch (err) {
-    return res.status(400).send({ Error: err })
+    return res.status(404).send({ Error: "User not found" })
   }
 }
 

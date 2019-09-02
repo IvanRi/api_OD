@@ -18,6 +18,7 @@ var addProduct = async function (req, res) {
       name: newProduct.name,
       price: newProduct.price,
       description: newProduct.description,
+      cuantity: newProduct.cuantity,
       id: newID
     })
     res.send({ message: 'created', product_id: newID })
@@ -46,6 +47,7 @@ var updateProduct = async function (req,res){
       name: updatedProduct.name,
       price: updatedProduct.price,
       description: updatedProduct.description,
+      cuantity: updatedProduct.cuantity
     },{
       where: {
         id: updatedProduct.id_product

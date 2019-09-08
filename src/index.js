@@ -28,9 +28,9 @@ app.use(cors())
 
 
 //routes products
-app.use('/login', login)
+app.use('/login',cors(), login)
 app.use('/api/products',[cors(),auth], productRoutes)
-app.use('/api/users',auth, userRoutes)
+app.use('/api/users',[cors(),auth], userRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/product_order', productOrderRoutes)
 

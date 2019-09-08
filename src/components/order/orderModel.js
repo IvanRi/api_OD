@@ -7,9 +7,6 @@ var Order = sequelize.define('order', {
   user_id: {
     type: Sequelize.INTEGER
   },
-  product_order: {
-    type: Sequelize.STRING
-  },
   order_id: {
     type: Sequelize.INTEGER,
     primaryKey: true

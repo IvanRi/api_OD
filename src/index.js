@@ -2,6 +2,8 @@ var express = require('express')
 var morgan = require('morgan')
 var productRoutes = require('./components/product/productRoutes')
 var userRoutes = require('./components/user/userRoutes')
+var orderRoutes = require('./components/order/orderRoutes')
+var productOrderRoutes = require('./components/productOrder/productOrderRoutes')
 var login = require('./services/login')
 var auth = require('./middlewares/auth')
 var cors = require('cors')
@@ -29,6 +31,8 @@ app.use(cors())
 app.use('/login', login)
 app.use('/api/products',[cors(),auth], productRoutes)
 app.use('/api/users',auth, userRoutes)
+app.use('/api/order', orderRoutes)
+app.use('/api/product_order', productOrderRoutes)
 
 app.listen(port, function () {
   console.log('Example app listening on port 3001!');

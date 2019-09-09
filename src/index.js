@@ -31,8 +31,8 @@ app.use(cors())
 app.use('/login',cors(), login)
 app.use('/api/products',[cors(),auth], productRoutes)
 app.use('/api/users',[cors(),auth], userRoutes)
-// app.use('/api/order',cors(), orderRoutes)
-// app.use('/api/product_order',cors(), productOrderRoutes)
+app.use('/api/order',cors(), orderRoutes)
+app.use('/api/product_order',cors(), productOrderRoutes)
 
 app.listen(port, function () {
   console.log('Example app listening on port 3001!');

@@ -8,7 +8,7 @@ var listAllOrder = async function (req, res) {
     where:{
       delivered: false
     },
-    include:['product_order']
+    include:[{model:ProductOrder, as: "product_order", attributes:{exclude:['id_product','id_product_order', 'order_id']}}]
   })
   res.send({ data: orderList })
 }

@@ -3,7 +3,7 @@ var ProductOrder = require('./productOrderModel')
 var addProductOrder = async function (req, res) {
   var newProductOrder = req.body
   var productIdMax = await ProductOrder.sequelize.query(`select max(id_product_order) from product_order where order_id = ${newProductOrder.order_id}`)
-  var newID = productIdMax[0][0].max+1
+  var newID = productIdMax[0][0].max + 1
   try {
     await ProductOrder.create({
       order_id: newProductOrder.order_id,
@@ -12,27 +12,31 @@ var addProductOrder = async function (req, res) {
       cuantity: newProductOrder.cuantity,
       id_product_order: newID
     })
-    res.send({ message: 'created' })
+    return res.send({ message: 'created' })
   } catch (e) {
-    return res.status(500).send({ "Error": e })
+    return res.status(400).send({ Error: "Ha ocurrido un error en addProductOrder" + e })
   }
 }
 
 var getAllProductOrder = async function (req, res) {
-  const productOrderList = await ProductOrder.findAll({
-    where:{
-      id_product: req.body.id_product
-    }
-  })
-  res.send({ data: productOrderList })
+  try {
+    const productOrderList = await ProductOrder.findAll({
+      where: {
+        id_product: req.body.id_product
+      }
+    })
+    return res.send({ data: productOrderList })
+  } catch (e) {
+    return res.status(400).send({ Error: "Ha ocurrido un error en getAllProductOrder" + e })
+  }
 }
 
-var getTotalProductSell = async function (req,res) {
-  try { 
+var getTotalProductSell = async function (req, res) {
+  try {
     const totalProductSell = await ProductOrder.sequelize.query(`SELECT SUM(cuantity) as total_product, product_name FROM "product_order" group by id_product, product_name`)
-    return res.send({data: totalProductSell[0]})
-  } catch (e){
-    return res.status(400).send({Error: "Error en getTotalProduct"+e})
+    return res.send({ data: totalProductSell[0] })
+  } catch (e) {
+    return res.status(400).send({ Error: "Error en getTotalProduct" + e })
   }
 }
 

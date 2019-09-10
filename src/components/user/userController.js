@@ -7,11 +7,11 @@ const listUsers = async function (req, res) {
     })
     return res.send({ message: userList })
   } catch (err) {
-    return res.status(400).send({ "Error": err })
+    return res.status(400).send({ Error: "Ha ocurrido un error en listUser" + err })
   }
 }
 
-const addNewUser = async function (req, res , next) {
+const addNewUser = async function (req, res, next) {
   var userIdMax = await User.sequelize.query("select max(user_id) from users")
   var newID = userIdMax[0][0].max + 1
 
@@ -24,7 +24,7 @@ const addNewUser = async function (req, res , next) {
     })
     return res.send(newUser)
   } catch (err) {
-    return res.status(400).send({ status: "Error", Error: err })
+    return res.status(400).send({ status: "Error", Error: "Ha ocurrido un error en addNewUser" + err })
   }
 }
 
@@ -38,7 +38,7 @@ const deleteUser = async function (req, res) {
     })
     return res.send({ status: "deleted" })
   } catch (err) {
-    return res.status(400).send({ "error": err })
+    return res.status(400).send({ Error: "Ha ocurrido un error en deleteUser" + err })
   }
 }
 
@@ -54,9 +54,9 @@ const updateUser = async function (req, res) {
         }
       }
     )
-    return res.send({ status: 'updated'})
+    return res.send({ status: 'updated' })
   } catch (err) {
-    return res.status(400).send({ status: "Error", Error: err })
+    return res.status(400).send({ status: "Error", Error: "Ha ocurrido un error en updateUser" + err })
   }
 }
 

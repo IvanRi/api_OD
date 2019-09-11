@@ -10,12 +10,9 @@ var ProductOrder = sequelize.define('product_order', {
   },
   id_product: {
     type: Sequelize.INTEGER,
-  },
-  id_product_order: {
-    type: Sequelize.INTEGER,
     primaryKey: true
   },
-  cuantity: {
+  cuantity_sell: {
     type: Sequelize.INTEGER,
   },
   product_name:{

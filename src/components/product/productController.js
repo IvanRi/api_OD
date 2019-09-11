@@ -63,7 +63,8 @@ var updateProduct = async function (req, res) {
   }
 }
 
-const decreaseCuantity = async function (req, res) {
+//hay que cambiar la logina para que pueda incrementar c/ el ingreso de mercaderia
+const increaseCuantity = async function (req, res) {
   try {
     await Product.update({
       cuantity: updatedProduct.cuantity
@@ -81,6 +82,5 @@ module.exports = {
   listAllProduct,
   addProduct,
   deleteProduct,
-  updateProduct,
-  decreaseCuantity
+  updateProduct
 }

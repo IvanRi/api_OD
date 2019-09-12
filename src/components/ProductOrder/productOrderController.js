@@ -20,7 +20,7 @@ const addProductOrder = async function (req, res) {
 
 const getTotalProductSell = async function (req, res) {
   try {
-    const totalProductSell = await ProductOrder.sequelize.query(`select SUM(quantity) as total_quantity, name, id FROM public.products group by id, name`)
+    const totalProductSell = await ProductOrder.sequelize.query(`select SUM(quantity_sell) as total_quantity, product_name, id_product FROM public.product_order group by id_product, product_name`)
     return res.send(totalProductSell[0])
   } catch (e) {
     return res.status(400).send({ Error: "Error en getTotalProductSell" + e })

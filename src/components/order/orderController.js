@@ -64,34 +64,44 @@ const changeDeliveredStatus = async function (req, res) {
 }
 
 const createOrder = async function (req, res) {
-  const orderMaxId = await Product.sequelize.query(`SELECT MAX(order_id) FROM public."order"`)
-  const newID = orderMaxId[0][0].max + 1
-  try {
-    await Order.create({
-      user_id: req.body.user_id,
-      order_id: newID,
-      delivered: false,
-      paused: false
-    })
-    for (let i = 0; req.body.product_order.length > i; i++) {
-      const newProductOrder = req.body.product_order[i]
-      await ProductOrder.create({
-        order_id: newID,
-        id_product: newProductOrder.id_product,
-        product_name: newProductOrder.product_name,
-        quantity_sell: newProductOrder.quantity_sell
+  let result = null
+  let cont = 0
+  while (result == null && cont <= 3) {
+    try {
+      let maxId = await Product.sequelize.query(`SELECT MAX(order_id) FROM public."order"`)
+      maxId = maxId[0][0].max
+      maxId += 1
+      result = await Order.create({
+        user_id: req.body.user_id,
+        order_id: maxId,
+        delivered: false,
+        paused: false
       })
-      await Product.update({
-        quantity: newProductOrder.total_quantity - newProductOrder.quantity_sell
-      }, {
-        where: {
-          id: newProductOrder.id_product
-        }
-      })
+      for (let i = 0; req.body.product_order.length > i; i++) {
+        const newProductOrder = req.body.product_order[i]
+        await ProductOrder.create({
+          order_id: maxId,
+          id_product: newProductOrder.id_product,
+          product_name: newProductOrder.product_name,
+          quantity_sell: newProductOrder.quantity_sell
+        })
+        await Product.update({
+          quantity: newProductOrder.total_quantity - newProductOrder.quantity_sell
+        }, {
+          where: {
+            id: newProductOrder.id_product
+          }
+        })
+      }
+    } catch (e) {
+      cont += 1;
     }
-    return res.status(200).send({ message: 'Orden creada con exito!' })
-  } catch (e) {
-    return res.status(400).send({ Error: "Ha ocurrido un error en createOrder" + e })
+  }
+  if (cont > 3) {
+    return res.status(400).send({ Error: "Ha ocurrido un error en createOrder" })
+  }
+  if (result) {
+    return res.send(result)
   }
 }
 

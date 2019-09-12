@@ -12,18 +12,28 @@ const listUsers = async function (req, res) {
 }
 
 const addNewUser = async function (req, res, next) {
-  const userIdMax = await User.sequelize.query("select max(user_id) from users")
-  const newID = userIdMax[0][0].max + 1
-  try {
-    const newUser = await User.create({
-      user_name: req.body.user_name,
-      password: req.body.password,
-      user_rol: req.body.user_rol,
-      user_id: newID
-    })
-    return res.send(newUser)
-  } catch (err) {
-    return res.status(400).send({ status: "Error", Error: "Ha ocurrido un error en addNewUser" + err })
+  let result = null
+  let cont = 0
+  while (result == null && cont <= 3) {
+    try {
+      let maxId = await User.sequelize.query("select max(user_id) from users")
+      maxId = maxId[0][0].max
+      maxId += 1
+      result = await User.create({
+        user_name: req.body.user_name,
+        password: req.body.password,
+        user_rol: req.body.user_rol,
+        user_id: maxId
+      })
+    } catch (err) {
+      cont += 1
+    }
+  }
+  if (cont > 3) {
+    return res.status(400).send({ status: "Error", Error: "Ha ocurrido un error en addNewUser" })
+  }
+  if (result) {
+    return res.send(result)
   }
 }
 

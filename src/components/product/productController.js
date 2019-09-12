@@ -17,20 +17,30 @@ const listAllProduct = async function (req, res) {
 }
 
 const addProduct = async function (req, res) {
-  const newProduct = req.body
-  const productIdMax = await Product.sequelize.query("select max(id) from products")
-  const newID = productIdMax[0][0].max + 1
-  try {
-    await Product.create({
-      name: newProduct.name,
-      price: newProduct.price,
-      description: newProduct.description,
-      quantity: newProduct.quantity,
-      id: newID
-    })
-    return res.send({ message: 'created', product_id: newID })
-  } catch (e) {
-    return res.status(400).send({ Error: " Ha ocurrido un error en addProduct" + e })
+  let result = null
+  let cont = 0
+  while (result == null && cont <= 3) {
+    const newProduct = req.body
+    try {
+      let maxId = await Product.sequelize.query("select max(id) from products")
+      maxId = maxId[0][0].max
+      maxId += 1
+      result = await Product.create({
+        name: newProduct.name,
+        price: newProduct.price,
+        description: newProduct.description,
+        quantity: newProduct.quantity,
+        id: maxId
+      })
+    } catch (e) {
+      cont += 1
+    }
+  }
+  if (cont > 3) {
+    return res.status(400).send({ Error: " Ha ocurrido un error en addProduct"})
+  }
+  if (result) {
+    return res.send(result)
   }
 }
 

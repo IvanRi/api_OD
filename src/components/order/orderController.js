@@ -1,12 +1,12 @@
 'use strict';
 
-var Order = require('./orderModel')
+const Order = require('./orderModel')
 //product order
-var ProductOrder = require('../ProductOrder/productOrderModel')
+const ProductOrder = require('../ProductOrder/productOrderModel')
 //product 
-var Product = require('../product/productModel')
+const Product = require('../product/productModel')
 
-var listAllOrder = async function (req, res) {
+const listCurrentOrder = async function (req, res) {
   try {
     const orderList = await Order.findAll({
       order: [["order_id", "ASC"]],
@@ -27,10 +27,45 @@ var listAllOrder = async function (req, res) {
   }
 }
 
+const listDeliveredOrders = async function (req, res) {
+  try {
+    const orderList = await Order.findAll({
+      order: [["order_id", "ASC"]],
+      where: {
+        delivered: true
+      },
+      include: [{
+        model: ProductOrder,
+        as: "product_order",
+        attributes: {
+          exclude: ['id_product', 'order_id']
+        }
+      }]
+    })
+    return res.send(orderList)
+  } catch (e) {
+    return res.status(400).send({ Error: "ha ocurrido un error en listAllOrder" + e })
+  }
+}
+
+const changeDeliveredStatus = async function (req, res) {
+  try {
+    await Order.update({
+      delivered: true
+    }, {
+      where: {
+        order_id: req.body.order_id
+      }
+    })
+    return res.send({ message: 'Pedido marcado como entregado correctamente!'})
+  } catch (e) {
+    return res.status(400).send({ Error: 'Ha ocurrido un error en changeDeliveredStatus ' + e })
+  }
+}
+
 const createOrder = async function (req, res) {
   var orderMaxId = await Product.sequelize.query(`SELECT MAX(order_id) FROM public."order"`)
   var newID = orderMaxId[0][0].max + 1
-  console.log("ORDERRRIDDDDD", newID)
   try {
     await Order.create({
       user_id: req.body.user_id,
@@ -92,7 +127,9 @@ ProductOrder.belongsTo(Order, {
 })
 
 module.exports = {
-  listAllOrder,
+  listCurrentOrder,
+  listDeliveredOrders,
   createOrder,
-  deleteOrder
+  deleteOrder,
+  changeDeliveredStatus
 }

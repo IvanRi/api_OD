@@ -7,7 +7,7 @@ var listAllProduct = async function (req, res) {
     const productList = await Product.findAll({
       order: [["id", "ASC"]]
     })
-    res.send({ data: productList })
+    return res.send({ data: productList })
   } catch (e) {
     return res.status(400).send({ Error: "Ha ocurrido un error en listAllProduct" + e })
   }
@@ -25,7 +25,7 @@ var addProduct = async function (req, res) {
       cuantity: newProduct.cuantity,
       id: newID
     })
-    res.send({ message: 'created', product_id: newID })
+    return res.send({ message: 'created', product_id: newID })
   } catch (e) {
     return res.status(400).send({ Error: " Ha ocurrido un error en addProduct" + e })
   }
@@ -38,7 +38,7 @@ var deleteProduct = async function (req, res) {
         id: req.body.id_product
       }
     })
-    res.send({ message: 'Producto eliminado correctamente!' })
+    return res.send({ message: 'Producto eliminado correctamente!' })
   } catch (e) {
     return res.status(400).send({ Error: 'Ha ocurrido un error en deleteProduct' + e })
   }
@@ -53,28 +53,35 @@ var updateProduct = async function (req, res) {
       description: updatedProduct.description,
       cuantity: updatedProduct.cuantity
     }, {
-        where: {
-          id: updatedProduct.id_product
-        }
-      })
+      where: {
+        id: updatedProduct.id_product
+      }
+    })
     return res.send({ status: 'ok', product: updatedProduct })
   } catch (e) {
     return res.status(400).send({ Error: "Ha ocurrido un error en updateProduct", e })
   }
 }
 
-//hay que cambiar la logina para que pueda incrementar c/ el ingreso de mercaderia
 const increaseCuantity = async function (req, res) {
   try {
+    const result = await Product.findAll({
+      where: {
+        id: req.body.product_id
+      },
+      attributes: ['cuantity']
+    })
+    const currentQuantity = result[0].dataValues.cuantity
     await Product.update({
-      cuantity: updatedProduct.cuantity
+      cuantity: currentQuantity + req.body.add_quantity
     }, {
-        where: {
-          id: updatedProduct.id_product
-        }
-      })
+      where: {
+        id: req.body.product_id
+      }
+    })
+    return res.send({ message: 'Increment ok' })
   } catch (e) {
-    return res.status(400).send({ Error: "Ha ocurrido un error en decreaseCuantity " + e })
+    return res.status(400).send({ Error: "Ha ocurrido un error en increaseCuantity " + e })
   }
 }
 
@@ -82,5 +89,6 @@ module.exports = {
   listAllProduct,
   addProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  increaseCuantity
 }

@@ -18,18 +18,18 @@ var addProductOrder = async function (req, res) {
   }
 }
 
-var getAllProductOrder = async function (req, res) {
-  try {
-    const productOrderList = await ProductOrder.findAll({
-      where: {
-        id_product: req.body.id_product
-      }
-    })
-    return res.send({ data: productOrderList })
-  } catch (e) {
-    return res.status(400).send({ Error: "Ha ocurrido un error en getAllProductOrder" + e })
-  }
-}
+// var getAllProductOrder = async function (req, res) {
+//   try {
+//     const productOrderList = await ProductOrder.findAll({
+//       where: {
+//         id_product: req.body.id_product
+//       }
+//     })
+//     return res.send({ data: productOrderList })
+//   } catch (e) {
+//     return res.status(400).send({ Error: "Ha ocurrido un error en getAllProductOrder" + e })
+//   }
+// }
 
 var getTotalProductSell = async function (req, res) {
   try {
@@ -42,6 +42,6 @@ var getTotalProductSell = async function (req, res) {
 
 module.exports = {
   addProductOrder,
-  getAllProductOrder,
+  // getAllProductOrder,
   getTotalProductSell
 }

@@ -36,7 +36,7 @@ const deleteUser = async function (req, res) {
         user_id: userId
       }
     })
-    return res.send({ status: "deleted" })
+    return res.send({ status: "Usuario eliminado correctamente!" })
   } catch (err) {
     return res.status(400).send({ Error: "Ha ocurrido un error en deleteUser" + err })
   }

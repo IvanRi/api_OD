@@ -76,7 +76,7 @@ const updateProduct = async function (req, res) {
   }
 }
 
-const increasequantity = async function (req, res) {
+const increaseQuantity = async function (req, res) {
   try {
     const result = await Product.findAll({
       where: {
@@ -98,6 +98,28 @@ const increasequantity = async function (req, res) {
   }
 }
 
+const decreaseQuantity = async function (req, res) {
+  try {
+    const result = await Product.findAll({
+      where: {
+        id: req.body.product_id
+      },
+      attributes: ['quantity']
+    })
+    const currentQuantity = result[0].dataValues.quantity
+    await Product.update({
+      quantity: currentQuantity - req.body.dec_quantity
+    }, {
+      where: {
+        id: req.body.product_id
+      }
+    })
+    return res.send({ message: 'Productos descontados correctamente.' })
+  } catch (e) {
+    return res.status(400).send({ Error: "Ha ocurrido un error en increasequantity " + e })
+  }
+}
+
 const searchProduct = async function (req, res) {
   const text = req.body.search_text.toLowerCase()
   try {
@@ -114,9 +136,10 @@ const searchProduct = async function (req, res) {
 
 module.exports = {
   listAllProduct,
+  decreaseQuantity,
   addProduct,
   deleteProduct,
   updateProduct,
-  increasequantity,
+  increaseQuantity,
   searchProduct
 }

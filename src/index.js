@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const moment = require('moment')
 const productRoutes = require('./components/product/productRoutes')
 const userRoutes = require('./components/user/userRoutes')
 const orderRoutes = require('./components/order/orderRoutes')
@@ -25,6 +26,11 @@ app.use(allowCrossDomain)
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors())
+
+const timeNow = new Date()
+console.log("THETIMEEEEEEEEEEEEEEE",timeNow)
+const timeMoment = moment()
+console.log("MOMENT",timeMoment)
 
 //routes products
 app.use('/login', cors(), login)

@@ -1,4 +1,6 @@
 'use strict';
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 
 var Product = require('./productModel')
 
@@ -85,10 +87,25 @@ const increaseCuantity = async function (req, res) {
   }
 }
 
+const searchProduct = async function (req, res) {
+  const text = req.body.search_text.toLowerCase()
+  try {
+    const result = await Product.findAll({
+      where: {
+        name: { [Op.like]: `${text}%` }
+      }
+    })
+    return res.send(result)
+  } catch (e) {
+    return res.status(400).send({ Error: 'Ha ocurrido un error en searchProduct' + e })
+  }
+}
+
 module.exports = {
   listAllProduct,
   addProduct,
   deleteProduct,
   updateProduct,
-  increaseCuantity
+  increaseCuantity,
+  searchProduct
 }

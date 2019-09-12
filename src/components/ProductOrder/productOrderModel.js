@@ -12,7 +12,7 @@ var ProductOrder = sequelize.define('product_order', {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  cuantity_sell: {
+  quantity_sell: {
     type: Sequelize.INTEGER,
   },
   product_name:{

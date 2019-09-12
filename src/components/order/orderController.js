@@ -79,10 +79,10 @@ const createOrder = async function (req, res) {
         order_id: newID,
         id_product: newProductOrder.id_product,
         product_name: newProductOrder.product_name,
-        cuantity_sell: newProductOrder.cuantity_sell
+        quantity_sell: newProductOrder.quantity_sell
       })
       await Product.update({
-        cuantity: newProductOrder.total_cuantity - newProductOrder.cuantity_sell
+        quantity: newProductOrder.total_quantity - newProductOrder.quantity_sell
       }, {
         where: {
           id: newProductOrder.id_product

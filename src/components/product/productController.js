@@ -1,10 +1,11 @@
 'use strict';
+//traido las Op de sequelize para hacer el like%
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
-var Product = require('./productModel')
+const Product = require('./productModel')
 
-var listAllProduct = async function (req, res) {
+const listAllProduct = async function (req, res) {
   try {
     const productList = await Product.findAll({
       order: [["id", "ASC"]]
@@ -15,16 +16,16 @@ var listAllProduct = async function (req, res) {
   }
 }
 
-var addProduct = async function (req, res) {
-  var newProduct = req.body
-  var productIdMax = await Product.sequelize.query("select max(id) from products")
-  var newID = productIdMax[0][0].max + 1
+const addProduct = async function (req, res) {
+  const newProduct = req.body
+  const productIdMax = await Product.sequelize.query("select max(id) from products")
+  const newID = productIdMax[0][0].max + 1
   try {
     await Product.create({
       name: newProduct.name,
       price: newProduct.price,
       description: newProduct.description,
-      cuantity: newProduct.cuantity,
+      quantity: newProduct.quantity,
       id: newID
     })
     return res.send({ message: 'created', product_id: newID })
@@ -33,7 +34,7 @@ var addProduct = async function (req, res) {
   }
 }
 
-var deleteProduct = async function (req, res) {
+const deleteProduct = async function (req, res) {
   try {
     await Product.destroy({
       where: {
@@ -46,14 +47,14 @@ var deleteProduct = async function (req, res) {
   }
 }
 
-var updateProduct = async function (req, res) {
+const updateProduct = async function (req, res) {
   const updatedProduct = req.body
   try {
     await Product.update({
       name: updatedProduct.name,
       price: updatedProduct.price,
       description: updatedProduct.description,
-      cuantity: updatedProduct.cuantity
+      quantity: updatedProduct.quantity
     }, {
       where: {
         id: updatedProduct.id_product
@@ -65,17 +66,17 @@ var updateProduct = async function (req, res) {
   }
 }
 
-const increaseCuantity = async function (req, res) {
+const increasequantity = async function (req, res) {
   try {
     const result = await Product.findAll({
       where: {
         id: req.body.product_id
       },
-      attributes: ['cuantity']
+      attributes: ['quantity']
     })
-    const currentQuantity = result[0].dataValues.cuantity
+    const currentQuantity = result[0].dataValues.quantity
     await Product.update({
-      cuantity: currentQuantity + req.body.add_quantity
+      quantity: currentQuantity + req.body.add_quantity
     }, {
       where: {
         id: req.body.product_id
@@ -83,7 +84,7 @@ const increaseCuantity = async function (req, res) {
     })
     return res.send({ message: 'Increment ok' })
   } catch (e) {
-    return res.status(400).send({ Error: "Ha ocurrido un error en increaseCuantity " + e })
+    return res.status(400).send({ Error: "Ha ocurrido un error en increasequantity " + e })
   }
 }
 
@@ -106,6 +107,6 @@ module.exports = {
   addProduct,
   deleteProduct,
   updateProduct,
-  increaseCuantity,
+  increasequantity,
   searchProduct
 }

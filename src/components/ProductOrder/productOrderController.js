@@ -1,9 +1,9 @@
-var ProductOrder = require('./productOrderModel')
+const ProductOrder = require('./productOrderModel')
 
-var addProductOrder = async function (req, res) {
-  var newProductOrder = req.body
-  var productIdMax = await ProductOrder.sequelize.query(`select max(id_product_order) from product_order where order_id = ${newProductOrder.order_id}`)
-  var newID = productIdMax[0][0].max + 1
+const addProductOrder = async function (req, res) {
+  const newProductOrder = req.body
+  const productIdMax = await ProductOrder.sequelize.query(`select max(id_product_order) from product_order where order_id = ${newProductOrder.order_id}`)
+  const newID = productIdMax[0][0].max + 1
   try {
     await ProductOrder.create({
       order_id: newProductOrder.order_id,
@@ -18,7 +18,7 @@ var addProductOrder = async function (req, res) {
   }
 }
 
-var getTotalProductSell = async function (req, res) {
+const getTotalProductSell = async function (req, res) {
   try {
     const totalProductSell = await ProductOrder.sequelize.query(`select SUM(quantity) as total_quantity, name, id FROM public.products group by id, name`)
     return res.send(totalProductSell[0])

@@ -25,4 +25,5 @@ const checkUserData = async function (req, res) {
 }
 
 api.post('/', checkUserData)
+
 module.exports = api

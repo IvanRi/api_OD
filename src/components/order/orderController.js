@@ -57,15 +57,15 @@ const changeDeliveredStatus = async function (req, res) {
         order_id: req.body.order_id
       }
     })
-    return res.send({ message: 'Pedido marcado como entregado correctamente!'})
+    return res.send({ message: 'Pedido marcado como entregado correctamente!' })
   } catch (e) {
     return res.status(400).send({ Error: 'Ha ocurrido un error en changeDeliveredStatus ' + e })
   }
 }
 
 const createOrder = async function (req, res) {
-  var orderMaxId = await Product.sequelize.query(`SELECT MAX(order_id) FROM public."order"`)
-  var newID = orderMaxId[0][0].max + 1
+  const orderMaxId = await Product.sequelize.query(`SELECT MAX(order_id) FROM public."order"`)
+  const newID = orderMaxId[0][0].max + 1
   try {
     await Order.create({
       user_id: req.body.user_id,

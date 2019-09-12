@@ -1,5 +1,5 @@
-var Sequelize = require('sequelize')
-var sequelize = require('../../db/config')
+const Sequelize = require('sequelize')
+const sequelize = require('../../db/config')
 
 const User = sequelize.define('user', {
   user_id: {
@@ -16,10 +16,10 @@ const User = sequelize.define('user', {
     type: Sequelize.STRING
   }
 }, {
-    tableName: 'users',
-    underscored: true,
-    timestamps: false
-  }
+  tableName: 'users',
+  underscored: true,
+  timestamps: false
+}
 )
-  
+
 module.exports = User

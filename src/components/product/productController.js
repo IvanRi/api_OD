@@ -88,7 +88,7 @@ const increasequantity = async function (req, res) {
   }
 }
 
-const  searchProduct = async function (req, res) {
+const searchProduct = async function (req, res) {
   const text = req.body.search_text.toLowerCase()
   try {
     const result = await Product.findAll({

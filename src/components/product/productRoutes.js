@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express')
 const api = express.Router()
-var productsCtrl = require('./productController')
+const productsCtrl = require('./productController')
 
 api.get('/', productsCtrl.listAllProduct)
 api.get('/search_product', productsCtrl.searchProduct)

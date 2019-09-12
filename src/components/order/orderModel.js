@@ -1,9 +1,9 @@
 "use strict";
 
-var Sequelize = require('sequelize')
-var sequelize = require('../../db/config')
+const Sequelize = require('sequelize')
+const sequelize = require('../../db/config')
 
-var Order = sequelize.define('order', {
+const Order = sequelize.define('order', {
   user_id: {
     type: Sequelize.INTEGER
   },
@@ -18,9 +18,9 @@ var Order = sequelize.define('order', {
     type: Sequelize.BOOLEAN,
   }
 }, {
-    tableName: 'order',
-    underscored: true,
-    timestamps: false
-  })
+  tableName: 'order',
+  underscored: true,
+  timestamps: false
+})
 
 module.exports = Order

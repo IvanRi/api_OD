@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express')
 const api = express.Router()
-var orderCtrl = require('./orderController')
+const orderCtrl = require('./orderController')
 
 api.get('/', orderCtrl.listCurrentOrder)
 api.get('/delivered_orders', orderCtrl.listDeliveredOrders)

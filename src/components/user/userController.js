@@ -12,9 +12,8 @@ const listUsers = async function (req, res) {
 }
 
 const addNewUser = async function (req, res, next) {
-  var userIdMax = await User.sequelize.query("select max(user_id) from users")
-  var newID = userIdMax[0][0].max + 1
-
+  const userIdMax = await User.sequelize.query("select max(user_id) from users")
+  const newID = userIdMax[0][0].max + 1
   try {
     const newUser = await User.create({
       user_name: req.body.user_name,
@@ -49,10 +48,10 @@ const updateUser = async function (req, res) {
       user_rol: req.body.user_rol,
       password: req.body.password
     }, {
-        where: {
-          user_id: req.body.user_id
-        }
+      where: {
+        user_id: req.body.user_id
       }
+    }
     )
     return res.send({ status: 'updated' })
   } catch (err) {
